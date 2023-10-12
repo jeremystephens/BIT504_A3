@@ -137,32 +137,32 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
             ball.setYVelocity(-1);
         }
         
+        // 	Iterate over all the bricks to check for collisions
         for(int i = 0; i < bricks.length; i++) {
-            if (ball.getRectangle().intersects(bricks[i].getRectangle())) {
-                int ballLeft = (int) ball.getRectangle().getMinX();
-                int ballHeight = (int) ball.getRectangle().getHeight();
-                int ballWidth = (int) ball.getRectangle().getWidth();
-                int ballTop = (int) ball.getRectangle().getMinY();
+        	
+            // Only check collisions for bricks that are not already broken
+            if (!bricks[i].isBroken() && ball.getRectangle().intersects(bricks[i].getRectangle())) {
+                
+                // Get the center points of the ball and the brick
+                int ballCenterX = ball.getX() + ball.getWidth() / 2;
+                int ballCenterY = ball.getY() + ball.getHeight() / 2;
+                int brickCenterX = bricks[i].getX() + bricks[i].getWidth() / 2;
+                int brickCenterY = bricks[i].getY() + bricks[i].getHeight() / 2;
+                
+                // Calculate the differences between the X and Y coordinates of the centers
+                int deltaX = ballCenterX - brickCenterX;
+                int deltaY = ballCenterY - brickCenterY;
 
-                Point pointRight = new Point(ballLeft + ballWidth + 1, ballTop);
-                Point pointLeft = new Point(ballLeft - 1, ballTop);
-                Point pointTop = new Point(ballLeft, ballTop - 1);
-                Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
-
-                if (!bricks[i].isBroken()) {
-                    if (bricks[i].getRectangle().contains(pointRight)) {
-                        ball.setXVelocity(-1);
-                    } else if (bricks[i].getRectangle().contains(pointLeft)) {
-                        ball.setXVelocity(1);
-                    }
-
-                    if (bricks[i].getRectangle().contains(pointTop)) {
-                        ball.setYVelocity(1);
-                    } else if (bricks[i].getRectangle().contains(pointBottom)) {
-                        ball.setYVelocity(-1);
-                    }
-                    bricks[i].setBroken(true);
+                // Determine which side of the brick the ball hit based on the magnitude of the differences
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    // Ball hit the left or right of the brick, so reverse the horizontal velocity
+                    ball.setXVelocity(-ball.getXVelocity()); 
+                } else {
+                    // Ball hit the top or bottom of the brick, so reverse the vertical velocity
+                    ball.setYVelocity(-ball.getYVelocity());
                 }
+                // Mark the brick as broken
+                bricks[i].setBroken(true);
             }
         }
     }
