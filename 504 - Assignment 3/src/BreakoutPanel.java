@@ -32,6 +32,12 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
     private Paddle paddle;
     private Brick bricks[];
     
+    private int countdown = 10; // starts at 10 seconds
+    private Timer restartTimer;
+    private boolean isCountdownActive = false;
+
+
+    
     public BreakoutPanel(Breakout game) {
         // Setting the preferred size ensures the content pane gets the desired size for our game.
         this.setPreferredSize(new Dimension(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT));
@@ -89,16 +95,60 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         // TODO: Set screen message
         screenMessage = "Game Over";
         stopGame();
+        
+        // Start the countdown timer to restart the game
+        startRestartCountdown();
     }
     
     private void gameWon() {
-        screenMessage = "Game Won";
         // TODO: Set screen message
+        screenMessage = "Game Won";
         stopGame();
+        
+        // Start the countdown timer to restart the game
+        startRestartCountdown();
     }
     
     private void stopGame() {
         gameRunning = false;
+    }
+    
+    //Reset the game to its initial state.
+    private void resetGame() {
+        ball.resetPosition();
+        paddle.resetPosition();
+        createBricks();
+        livesLeft = 3; 
+        gameRunning = true;
+        countdown = 10;
+        screenMessage = "";
+    }
+    
+    private void startRestartCountdown() {
+        countdown = 10; // reset countdown
+
+        if (restartTimer != null) {
+            restartTimer.stop(); // stop any previous timer instance
+        }
+
+        // This timer will tick every second (1000 ms)
+        restartTimer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                isCountdownActive = true; // countdown is active now
+                countdown--;
+
+                if (countdown <= 0) {
+                    // When countdown is over
+                    ((Timer)e.getSource()).stop(); // Stop the timer
+                    resetGame();  // Reset the game state
+                    gameRunning = true; // Start the game again
+                    isCountdownActive = false; // countdown is no longer active      
+                }
+                repaint(); // To refresh the displayed countdown
+            }
+        });
+        
+        restartTimer.start();
     }
     
     private void collisions() {
@@ -186,6 +236,21 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
             int messageWidth = g.getFontMetrics().stringWidth(screenMessage);
             g.drawString(screenMessage, (Settings.WINDOW_WIDTH / 2) - (messageWidth / 2), Settings.MESSAGE_POSITION);
         }
+
+        // If the game is not currently running, display the countdown and exit instructions
+        if (!gameRunning) {
+            g.setFont(new Font("Arial", Font.BOLD, 18));
+            
+            // Display the countdown message for the next game start
+            String countdownMessage = "Next game starts in " + countdown + " seconds...";
+            int countdownMessageWidth = g.getFontMetrics().stringWidth(countdownMessage);
+            g.drawString(countdownMessage, (Settings.WINDOW_WIDTH / 2) - (countdownMessageWidth / 2), Settings.MESSAGE_POSITION + 30);
+            
+            // Display the message for the user to exit the game by pressing 'X'
+            String exitMessage = "Press 'X' to Exit";
+            int exitMessageWidth = g.getFontMetrics().stringWidth(exitMessage);
+            g.drawString(exitMessage, (Settings.WINDOW_WIDTH / 2) - (exitMessageWidth / 2), Settings.MESSAGE_POSITION + 60);
+        }
     }
 
     @Override
@@ -197,6 +262,11 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         }
         if (key == KeyEvent.VK_RIGHT) {
             paddle.setXVelocity(5);   // Assuming 5 is a suitable velocity to move right
+        }
+        
+        // If countdown is active and "X" key is pressed, exit the game.
+        if (isCountdownActive && e.getKeyCode() == KeyEvent.VK_X) {
+            System.exit(0);
         }
     }
 

@@ -27,9 +27,6 @@ public class Breakout extends JFrame {
         Insets insets = getInsets();
         setSize(Settings.WINDOW_WIDTH + insets.left + insets.right, 
                 Settings.WINDOW_HEIGHT + insets.top + insets.bottom);
-
-        // Printing out insets to diagnose sizing discrepancies of the JFrame.
-        System.out.println("Insets: " + insets);
         
         // TODO: Set the title
         setTitle(Settings.WINDOW_NAME);
@@ -42,7 +39,7 @@ public class Breakout extends JFrame {
         panel = new BreakoutPanel(this);
         add(panel);
 
-        // After setting up components, we call pack() to adjust the JFrame's size to fit its content.
+        // Call pack() to adjust the JFrame's size to fit its content.
         pack();
         
         // TODO: Set visible to true
@@ -54,6 +51,9 @@ public class Breakout extends JFrame {
         // Get the size (width and height) of the entire JFrame, including its borders and title bar.
         Dimension frameSize = getSize();
 
+        // print out insets to diagnose sizing discrepancies of the JFrame.
+        System.out.println("Insets: " + insets);
+        
         // Printing out the content pane size to ensure it matches game settings.
         System.out.println("ContentPane Size: " + contentPaneSize);
         
