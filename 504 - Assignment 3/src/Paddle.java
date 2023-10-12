@@ -14,6 +14,7 @@ public class Paddle extends Sprite {
 
     private int xVelocity;
     
+
     public Paddle() {
         // TODO: Set width to Settings.PADDLE_WIDTH
         setWidth(Settings.PADDLE_WIDTH);
@@ -26,7 +27,8 @@ public class Paddle extends Sprite {
     public void resetPosition() {
         // TODO: Set initial position x and y (use INITIAL_PADDLE_X/Y)
         // Note: Check Ball.java for a hint
-        setX(Settings.INITIAL_PADDLE_X);
+        int centeredXPosition = (400 - Settings.PADDLE_WIDTH) / 2;
+        setX(centeredXPosition);
         setY(Settings.INITIAL_PADDLE_Y);
     }
     
