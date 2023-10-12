@@ -58,7 +58,8 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         int y_space = 0;
         for(int x = 0; x < 4; x++) {
             for(int y = 0; y < 5; y++) {
-                bricks[counter] = new Brick((x * Settings.BRICK_WIDTH) + Settings.BRICK_HORI_PADDING + x_space, (y * Settings.BRICK_HEIGHT) + Settings.BRICK_VERT_PADDING + y_space);
+            	// An offset of 8 pixels is added to ensure the bricks are centered in the content pane, compensating for changes in frame dimensions.
+                bricks[counter] = new Brick(8 + (x * Settings.BRICK_WIDTH) + Settings.BRICK_HORI_PADDING + x_space, (y * Settings.BRICK_HEIGHT) + Settings.BRICK_VERT_PADDING + y_space);
                 counter++;
                 y_space++;
             }
