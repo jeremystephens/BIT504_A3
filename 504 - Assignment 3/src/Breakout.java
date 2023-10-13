@@ -52,13 +52,13 @@ public class Breakout extends JFrame {
         Dimension frameSize = getSize();
 
         // print out insets to diagnose sizing discrepancies of the JFrame.
-        System.out.println("Insets: " + insets);
+        //System.out.println("Insets: " + insets);
         
         // Printing out the content pane size to ensure it matches game settings.
-        System.out.println("ContentPane Size: " + contentPaneSize);
+        //System.out.println("ContentPane Size: " + contentPaneSize);
         
         // Printing out the JFrame size for comparison with content pane size.
-        System.out.println("JFrame Size: " + frameSize);
+        //System.out.println("JFrame Size: " + frameSize);
     }
 
     public static void main(String[] args) {
