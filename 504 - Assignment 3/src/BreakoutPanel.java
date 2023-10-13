@@ -36,8 +36,11 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
     private Timer restartTimer;
     private boolean isCountdownActive = false;
 
-
-    
+    /**
+     * Constructor for the BreakoutPanel class.
+     * Initializes the game panel and sets up game elements.
+     * @param game The Breakout game instance.
+     */
     public BreakoutPanel(Breakout game) {
         // Setting the preferred size ensures the content pane gets the desired size for our game.
         this.setPreferredSize(new Dimension(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT));
@@ -58,6 +61,9 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         createBricks();
     }
     
+    /**
+     * Initializes and creates the bricks for the game.
+     */
     private void createBricks() {
         int counter = 0;
         int x_space = 0;
@@ -74,6 +80,10 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         }
     }
     
+    /**
+     * Paints the bricks on the game panel.
+     * @param g The Graphics object to paint on.
+     */
     private void paintBricks(Graphics g) {
         // TODO: Loop through the bricks and call the paint() method
         for(Brick brick : bricks) {
@@ -81,6 +91,9 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         }
     }
     
+    /**
+     * Updates the game state including the ball, paddle, and collisions.
+     */
     private void update() {
         if(gameRunning) {
             // TODO: Update the ball and paddle
@@ -91,29 +104,40 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         }
     }
     
+    /**
+     * Handles the game over state.
+     * Displays a message and starts a countdown to restart the game.
+     */
     private void gameOver() {
         // TODO: Set screen message
         screenMessage = "Game Over";
         stopGame();
-        
-        // Start the countdown timer to restart the game
         startRestartCountdown();
     }
     
+    /**
+     * Handles the game won state.
+     * Displays a message and starts a countdown to restart the game.
+     */
     private void gameWon() {
         // TODO: Set screen message
         screenMessage = "Game Won";
         stopGame();
-        
-        // Start the countdown timer to restart the game
         startRestartCountdown();
     }
     
+    /**
+     * Stops the game by setting the gameRunning flag to false.
+     */
     private void stopGame() {
         gameRunning = false;
     }
     
-    //Reset the game to its initial state.
+    
+    /**
+     * Resets the game to its initial state.
+     * Resets the ball, paddle, bricks, lives, and game state.
+     */
     private void resetGame() {
         ball.resetPosition();
         paddle.resetPosition();
@@ -124,6 +148,10 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         screenMessage = "";
     }
     
+    /**
+     * Starts a countdown timer to restart the game.
+     * After the countdown, the game is reset and starts again.
+     */
     private void startRestartCountdown() {
         countdown = 10; // reset countdown
 
@@ -151,6 +179,9 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         restartTimer.start();
     }
     
+    /**
+     * Handles various game collisions, including loss and win conditions.
+     */
     private void collisions() {
         // Check for loss
         if(ball.y > 450) {

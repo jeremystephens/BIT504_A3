@@ -14,6 +14,12 @@ public class Brick extends Sprite {
     
     private boolean broken = false;
     
+    /**
+     * Constructor for the Brick class.
+     * Initializes the brick's position and size.
+     * @param x The x-coordinate of the brick.
+     * @param y The y-coordinate of the brick.
+     */
     public Brick(int x, int y) {
         // TODO: Set x using the parameter
         setX(x);
@@ -23,7 +29,7 @@ public class Brick extends Sprite {
         setWidth(Settings.BRICK_WIDTH);
         setHeight(Settings.BRICK_HEIGHT);
     }
-
+    
     public boolean isBroken() {
         // TODO: Return the correct variable
         return broken; 

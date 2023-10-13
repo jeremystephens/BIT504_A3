@@ -35,6 +35,10 @@ public class Ball extends Sprite {
         setY(Settings.INITIAL_BALL_Y);
     }
     
+    /**
+     * Updates the ball's position based on its velocities.
+     * Also handles boundary checks for bouncing.
+     */
     public void update() {
         // Move the ball based on its velocities
         x += xVelocity;
@@ -43,8 +47,8 @@ public class Ball extends Sprite {
         y += yVelocity;
 
         // Logging ball's position before boundary checks to diagnose potential out-of-bound issues.
-        // System.out.println("Before checks: Ball X = " + x);
-        // System.out.println("Before checks: Ball Y = " + y);
+        //System.out.println("Before checks: Ball X = " + x);
+        //System.out.println("Before checks: Ball Y = " + y);
         
         // Bounce off the left side of the screen
         if (x <= 0) {
@@ -75,26 +79,46 @@ public class Ball extends Sprite {
         // System.out.println("After checks: Ball Y = " + y);
     }
     
+    /**
+     * Sets the x velocity of the ball.
+     * @param x The new x velocity.
+     */
     public void setXVelocity(int x) {
         // TODO: Set the x velocity
         xVelocity = x;
     }
     
+    /**
+     * Sets the y velocity of the ball.
+     * @param y The new y velocity.
+     */
     public void setYVelocity(int y) {
         // TODO: Set the y velocity
         yVelocity = y;
     }
     
+    /**
+     * Gets the current x velocity of the ball.
+     * @return The x velocity.
+     */
     public int getXVelocity() {
         // TODO: Return the x velocity
         return xVelocity;
     }
     
+    /**
+     * Gets the current y velocity of the ball.
+     * @return The y velocity.
+     */
     public int getYVelocity() {
         // TODO: Return the y velocity
         return yVelocity;
     }
     
+    /**
+     * Paints the ball on the given Graphics object.
+     * @param g The Graphics object to paint on.
+     */
     public void paint(Graphics g) {
         g.fillOval(x, y, Settings.BALL_WIDTH, Settings.BALL_HEIGHT);
     }
